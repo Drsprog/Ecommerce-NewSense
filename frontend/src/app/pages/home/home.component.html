@@ -1,0 +1,20 @@
+<div class="container">
+  <h1>Bienvenido a la Tienda</h1>
+
+  <div *ngIf="isLoading">Cargando productos...</div>
+  <div *ngIf="error" class="error">{{ error }}</div>
+
+  <div class="product-list" *ngIf="!isLoading && products.length > 0">
+    <div class="product-card" *ngFor="let p of products">
+      <h3>{{ p.name }}</h3>
+      <p>{{ p.description }}</p>
+      <p><strong>Precio:</strong> S/ {{ p.price }}</p>
+      <p><small>Stock: {{ p.stock }}</small></p>
+      <button>Añadir al carrito</button>
+    </div>
+  </div>
+
+  <div *ngIf="!isLoading && products.length === 0">
+    No hay productos disponibles.
+  </div>
+</div>

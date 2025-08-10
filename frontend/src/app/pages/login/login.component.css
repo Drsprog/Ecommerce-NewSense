@@ -1,0 +1,40 @@
+.login-container {
+  width: 300px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
+
+label {
+  display: block;
+  margin-top: 1rem;
+}
+
+input {
+  width: 95%;
+  padding: 5px;
+  margin-top: 0.2rem;
+}
+
+button {
+  margin-top: 1rem;
+  width: 100%;
+  padding: 0.5rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+/* Hover: cuando el puntero está encima */
+button:hover {
+  background-color: #0056b3;
+}
+
+/* Active: cuando se hace clic */
+button:active {
+  background-color: #004085;
+  transform: scale(0.98);
+}

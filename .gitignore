@@ -8,8 +8,8 @@ backend/target/
 # Archivos de configuración sensibles
 backend/.env
 backend/.env.*
-backend/application-*.yml
-backend/application-*.properties
+backend/backend/application-*.yml
+backend/backend/application-*.properties
 
 # Maven Wrapper
 backend/.mvn/

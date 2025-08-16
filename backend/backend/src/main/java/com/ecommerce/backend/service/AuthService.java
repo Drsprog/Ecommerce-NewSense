@@ -22,10 +22,10 @@ public class AuthService {
     private JwtUtil jwtUtil;
 
     public String login(LoginRequest request) {
-        System.out.println("Login attempt: " + request.getUsername());
+        System.out.println("Login attempt: " + request.getEmail());
 
         // Buscar usuario por username
-        User user = userRepository.findByUsername(request.getUsername())
+        User user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
         System.out.println("Usuario encontrado: " + user.getUsername());
 

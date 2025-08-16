@@ -12,12 +12,12 @@ interface LoginRequest {
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:8080/api/auth';
+  private apiUrl = 'http://localhost:8080/auth';
   constructor(private http: HttpClient) {}
 
-  login(credentials: any): Observable<any> {
+  login(credentials: LoginRequest): Observable<any> {
     return this.http.post(`${this.apiUrl}/login`, credentials).pipe(
-      timeout(500),
+      timeout(5000),
       catchError((err) => {
         console.error('Error en AuthService:', err);
         return throwError(() => err);

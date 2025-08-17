@@ -20,4 +20,9 @@ public class User {
     private String password;
     private String email;
     private String role;
+
+     // Datos de perfil (opcionales)
+    private String fullName;   // Nombre real
+    private String address;    // Dirección de envío
+    private String phone;      // Teléfono
 }

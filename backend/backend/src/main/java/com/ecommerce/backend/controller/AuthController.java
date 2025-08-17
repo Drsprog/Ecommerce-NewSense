@@ -3,11 +3,7 @@ package com.ecommerce.backend.controller;
 import com.ecommerce.backend.dto.LoginRequest;
 import com.ecommerce.backend.dto.LoginResponse;
 import com.ecommerce.backend.dto.RegisterRequest;
-import com.ecommerce.backend.dto.UpdateUserRequest;
-import com.ecommerce.backend.dto.UpdateUserRoleRequest;
-import com.ecommerce.backend.dto.UserResponse;
 import com.ecommerce.backend.service.AuthService;
-import com.ecommerce.backend.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

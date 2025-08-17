@@ -19,19 +19,6 @@ public class AuthController {
     @Autowired
     private AuthService authService;
 
-    @Autowired
-    private UserService userService;
-
-    // Actualizar perfil del usuario
-    @PutMapping("/{id}")
-    public ResponseEntity<UserResponse> updateUser(
-            @PathVariable String id,
-            @RequestBody UpdateUserRequest request) {
-        UserResponse updated = userService.updateUser(id, request);
-        return ResponseEntity.ok(updated);
-    }
-
-    
     // El usuario se logea
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
@@ -52,15 +39,6 @@ public class AuthController {
         } else {
             return ResponseEntity.status(400).body("El usuario o email ya existe");
         }
-    }
-
-    // Cambiar rol de un usuario (solo admin)
-    @PutMapping("/{id}/role")
-    public ResponseEntity<UserResponse> updateUserRole(
-            @PathVariable String id,
-            @RequestBody UpdateUserRoleRequest request) {
-        UserResponse updated = userService.updateRole(id, request);
-        return ResponseEntity.ok(updated);
     }
 
 }

@@ -1,0 +1,28 @@
+<div class="profile-container" *ngIf="!loading; else cargando">
+  <h2>Perfil de Usuario</h2>
+
+  <div *ngIf="error" class="error">{{ error }}</div>
+
+  <form (ngSubmit)="updateProfile()" *ngIf="!error">
+    <label>
+      Usuario:
+      <input type="text" [(ngModel)]="user.username" name="username" />
+    </label>
+
+    <label>
+      Email:
+      <input type="email" [(ngModel)]="user.email" name="email" />
+    </label>
+
+    <label>
+      Rol:
+      <input type="text" [(ngModel)]="user.role" name="role" disabled />
+    </label>
+
+    <button type="submit">Actualizar</button>
+  </form>
+</div>
+
+<ng-template #cargando>
+  <p>Cargando perfil...</p>
+</ng-template>

@@ -1,7 +1,12 @@
 <nav class="navbar">
   <a routerLink="/">Inicio</a>
   <a routerLink="/cart">Carrito</a>
-  <a routerLink="/login">Login</a>
-  <a routerLink="/register">Registrarse</a>
+  <!-- Si no está logueado -->
+  <a routerLink="/login" *ngIf="!isLoggedIn()">Login</a>
+  <a routerLink="/register" *ngIf="!isLoggedIn()">Registrarse</a>
+
+  <!-- Si está logueado -->
+  <a routerLink="/profile" *ngIf="isLoggedIn()">Perfil</a>
+  <a href="#" (click)="logout()" *ngIf="isLoggedIn()">Cerrar sesión</a>
 </nav>
 

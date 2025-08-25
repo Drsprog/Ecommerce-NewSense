@@ -1,0 +1,41 @@
+<footer class="bg-gray-900 text-gray-300 py-8 mt-10">
+  <div class="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8">
+
+    <!-- Sección logo / descripción -->
+    <div>
+      <h2 class="text-2xl font-bold text-white mb-4">NewSense</h2>
+      <p class="text-sm">
+        Tu tienda en línea con lo último en tecnología, moda y más.
+        Compra fácil, rápido y seguro 🚀
+      </p>
+    </div>
+
+    <!-- Sección enlaces -->
+    <div>
+      <h3 class="text-lg font-semibold text-white mb-4">Enlaces rápidos</h3>
+      <ul class="space-y-2">
+        <li><a routerLink="/" class="hover:text-blue-400 transition">Inicio</a></li>
+        <li><a routerLink="/cart" class="hover:text-blue-400 transition">Carrito</a></li>
+        <li><a routerLink="/login" *ngIf="!isLoggedIn()" class="hover:text-blue-400 transition">Login</a></li>
+        <li><a routerLink="/register" *ngIf="!isLoggedIn()" class="hover:text-blue-400 transition">Registrarse</a></li>
+      </ul>
+    </div>
+
+    <!-- Sección contacto -->
+    <div>
+      <h3 class="text-lg font-semibold text-white mb-4">Contáctanos</h3>
+      <p>Email: soporte&#64;newsense.com</p>
+      <p>Tel: +51 999 999 999</p>
+      <div class="flex space-x-4 mt-4">
+        <a href="#" class="hover:text-blue-400 transition">🌐</a>
+        <a href="#" class="hover:text-blue-400 transition">🐦</a>
+        <a href="#" class="hover:text-blue-400 transition">📘</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Línea inferior -->
+  <div class="text-center text-sm text-gray-500 mt-8 border-t border-gray-700 pt-4">
+    © 2025 NewSense. Todos los derechos reservados.
+  </div>
+</footer>

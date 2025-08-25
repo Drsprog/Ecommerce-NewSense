@@ -1,12 +1,31 @@
-<nav class="navbar">
-  <a routerLink="/">Inicio</a>
-  <a routerLink="/cart">Carrito</a>
-  <!-- Si no está logueado -->
-  <a routerLink="/login" *ngIf="!isLoggedIn()">Login</a>
-  <a routerLink="/register" *ngIf="!isLoggedIn()">Registrarse</a>
+<nav class="bg-gray-900 text-white px-6 py-4 flex items-center justify-between shadow-md">
+  <!-- Logo -->
+  <div class="text-2xl font-bold tracking-wide">
+    <a routerLink="/" class="hover:text-blue-400 transition">NewSense</a>
+  </div>
 
-  <!-- Si está logueado -->
-  <a routerLink="/profile" *ngIf="isLoggedIn()">Perfil</a>
-  <a href="#" (click)="logout()" *ngIf="isLoggedIn()">Cerrar sesión</a>
+  <!-- Links -->
+  <div class="hidden md:flex space-x-6">
+    <a routerLink="/" class="hover:text-blue-400 transition">Inicio</a>
+    <a routerLink="/cart" class="hover:text-blue-400 transition">Carrito</a>
+
+    <!-- Si no está logueado -->
+    <a routerLink="/login" *ngIf="!isLoggedIn()" class="hover:text-blue-400 transition">Login</a>
+    <a routerLink="/register" *ngIf="!isLoggedIn()" class="hover:text-blue-400 transition">Registrarse</a>
+
+    <!-- Si está logueado -->
+    <a routerLink="/profile" *ngIf="isLoggedIn()" class="hover:text-blue-400 transition">Perfil</a>
+    <button (click)="logout()" *ngIf="isLoggedIn()" class="hover:text-red-400 transition">Cerrar sesión</button>
+  </div>
+
+  <!-- Botón hamburguesa (mobile) -->
+  <div class="md:hidden">
+    <button class="text-gray-300 hover:text-white focus:outline-none">
+      <!-- Icono hamburguesa -->
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    </button>
+  </div>
 </nav>
-

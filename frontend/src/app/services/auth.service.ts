@@ -25,7 +25,22 @@ export class AuthService {
     );
   }
 
-  register(data:RegisterRequest):Observable<any> {
+  register(data: RegisterRequest): Observable<any> {
     return this.http.post(`${this.apiUrl}/register`, data);
+  }
+
+  // guardar token en localStorage
+  saveToken(token: string): void {
+    localStorage.setItem('token', token);
+  }
+
+  // leer si el usuario está logueado
+  isAuthenticated(): boolean {
+    return !!localStorage.getItem('token');
+  }
+
+  // cerrar sesión
+  logout(): void {
+    localStorage.removeItem('token');
   }
 }

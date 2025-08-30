@@ -20,7 +20,7 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    // 🔹 Obtener usuario por username (para /me)
+    // Obtener usuario por username (para /me)
     public UserResponse getByUsername(String username) {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
@@ -33,7 +33,7 @@ public class UserService {
                 .build();
     }
 
-    // 🔹 Actualizar usuario autenticado (para /me)
+    // Actualizar usuario autenticado (para /me)
     public UserResponse updateByUsername(String username, UpdateUserRequest request) {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));

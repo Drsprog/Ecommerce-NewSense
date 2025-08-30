@@ -1,44 +1,98 @@
-<div class="register-container">
-  <h2>Crear cuenta</h2>
-  <form (ngSubmit)="onSubmit()" #registerForm="ngForm">
+<div class="flex min-h-screen items-center justify-center bg-gray-100 p-4">
+  <div class="w-full max-w-md rounded-2xl bg-white shadow-lg p-8">
+    <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">
+      Crear cuenta
+    </h2>
 
-    <div class="form-group">
-      <label for="username">Nombre de usuario: </label>
-      <input
-        type="text"
-        id="username"
-        name="username"
-        [(ngModel)]="form.username"
-        required
-      />
-    </div>
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="space-y-4">
+      <!-- Username -->
+      <div>
+        <label for="username" class="block text-sm font-medium text-gray-700">
+          Nombre de usuario
+        </label>
+        <input
+          type="text"
+          id="username"
+          formControlName="username"
+          required
+          class="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2
+                 text-gray-900 placeholder-gray-400
+                 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          placeholder="Tu nombre"
+        />
+      </div>
 
-    <div class="form-group">
-      <label for="email">Correo electrónico: </label>
-      <input
-        type="email"
-        id="email"
-        name="email"
-        [(ngModel)]="form.email"
-        required
-      />
-    </div>
+      <!-- Email -->
+      <div>
+        <label for="email" class="block text-sm font-medium text-gray-700">
+          Correo electrónico
+        </label>
+        <input
+          type="email"
+          id="email"
+          formControlName="email"
+          required
+          class="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2
+                 text-gray-900 placeholder-gray-400
+                 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          placeholder="tucorreo@ejemplo.com"
+        />
+      </div>
 
-    <div class="form-group">
-      <label for="password">Contraseña: </label>
-      <input
-        type="password"
-        id="password"
-        name="password"
-        [(ngModel)]="form.password"
-        required
-      />
-    </div>
+      <!-- Password -->
+      <div>
+        <label for="password" class="block text-sm font-medium text-gray-700">
+          Contraseña
+        </label>
+        <input
+          type="password"
+          id="password"
+          formControlName="password"
+          required
+          class="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2
+                 text-gray-900 placeholder-gray-400
+                 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          placeholder="********"
+        />
+      </div>
 
-    <button type="submit">Registrarse</button>
-  </form>
+      <!-- Botón -->
+      <button
+        type="submit"
+        [disabled]="isLoading || registerForm.invalid"
+        class="w-full rounded-lg bg-blue-600 py-2 px-4 text-white font-semibold
+               shadow hover:bg-blue-700 focus:outline-none
+               focus:ring-2 focus:ring-blue-500 focus:ring-offset-1
+               disabled:opacity-50 disabled:cursor-not-allowed"
+      >
+        Registrarse
+      </button>
 
-  <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
-  <p *ngIf="successMessage" class="success">{{ successMessage }}</p>
+      <!-- Loader -->
+      @if (isLoading) {
+        <div class="text-center text-sm text-gray-500">Registrando...</div>
+      }
+    </form>
+
+    <!-- Mensajes -->
+    @if (errorMessage) {
+      <p class="mt-4 text-center text-sm text-red-600">
+        {{ errorMessage }}
+      </p>
+    }
+
+    @if (successMessage) {
+      <p class="mt-4 text-center text-sm text-green-600">
+        {{ successMessage }}
+      </p>
+    }
+
+    <!-- Enlace para cambiar a login -->
+    <p class="mt-6 text-center text-sm text-gray-600">
+      ¿Ya tienes cuenta?
+      <a routerLink="/login" class="text-blue-600 hover:underline">
+        Inicia sesión aquí
+      </a>
+    </p>
+  </div>
 </div>
-

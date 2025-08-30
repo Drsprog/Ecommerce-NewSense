@@ -1,51 +1,54 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import {ReactiveFormsModule,FormBuilder,FormGroup,Validators} from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
-import { RegisterRequest } from '../../models/register-request.interface';
-
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-register',
-  imports: [CommonModule, FormsModule],
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule, RouterModule],
   templateUrl: './register.component.html',
-  styleUrl: './register.component.css'
+  styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent {
-  form:RegisterRequest={
-    username: '',
-    email: '',
-    password: '',
-  }
-
+  registerForm: FormGroup;
   errorMessage = '';
   successMessage = '';
   isLoading = false;
 
-  constructor(private authService: AuthService) {}
+  constructor(private fb: FormBuilder, private authService: AuthService) {
+    this.registerForm = this.fb.group({
+      username: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', Validators.required],
+    });
+  }
 
   onSubmit() {
     this.errorMessage = '';
     this.successMessage = '';
 
-    if (!this.form.username || !this.form.email || !this.form.password) {
-      this.errorMessage = 'Todos los campos son obligatorios.';
+    if (this.registerForm.invalid) {
+      this.errorMessage = 'Todos los campos son obligatorios y válidos.';
       return;
     }
 
     this.isLoading = true;
 
-    this.authService.register(this.form).subscribe({
+    this.authService.register(this.registerForm.value).subscribe({
       next: () => {
-        this.successMessage = 'Usuario registrado exitosamente.';
-        this.form = { username: '', email: '', password: '' }; // Reset form
+        this.successMessage = 'Usuario registrado exitosamente 🎉';
+        this.registerForm.reset(); // Reset form
         this.isLoading = false;
       },
       error: (err) => {
-        this.errorMessage = err.error.message || 'Error al registrar el usuario.';
+        this.errorMessage =
+          err.error?.message || 'Error al registrar el usuario.';
         this.isLoading = false;
-      }
+      },
     });
-    console.log('Datos enviados:', this.form);
+
+    console.log('Datos enviados:', this.registerForm.value);
   }
 }

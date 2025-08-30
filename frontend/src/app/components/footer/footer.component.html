@@ -16,8 +16,12 @@
       <ul class="space-y-2">
         <li><a routerLink="/" class="hover:text-blue-400 transition">Inicio</a></li>
         <li><a routerLink="/cart" class="hover:text-blue-400 transition">Carrito</a></li>
-        <li><a routerLink="/login" *ngIf="!isLoggedIn()" class="hover:text-blue-400 transition">Login</a></li>
-        <li><a routerLink="/register" *ngIf="!isLoggedIn()" class="hover:text-blue-400 transition">Registrarse</a></li>
+         @if (!isLoggedIn()) {
+          <li><a routerLink="/login" class="hover:text-blue-400 transition">Login</a></li>
+          <li><a routerLink="/register" class="hover:text-blue-400 transition">Registrarse</a></li>
+        } @else {
+          <li><a href="#" (click)="logout()" class="hover:text-blue-400 transition">Cerrar sesión</a></li>
+        }
       </ul>
     </div>
 

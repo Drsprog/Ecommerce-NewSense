@@ -41,10 +41,10 @@ public class AuthService {
         return token;
     }
 
-    public boolean register(RegisterRequest request) {
+    public String register(RegisterRequest request) {
         if (userRepository.existsByUsername(request.getUsername())
                 || userRepository.existsByEmail(request.getEmail())) {
-            return false;
+            throw new RuntimeException("El usuario o email ya existe");
         }
 
         User user = new User();
@@ -54,7 +54,10 @@ public class AuthService {
         user.setRole("ROLE_USER");
 
         userRepository.save(user);
-        return true;
+         // Generar token al registrarse
+        String token = jwtUtil.generateToken(user.getUsername());
+        System.out.println("Token generado al registrar: " + token);
+        return token;
     }
 
 }

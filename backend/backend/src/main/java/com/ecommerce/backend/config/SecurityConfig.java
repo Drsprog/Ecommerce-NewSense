@@ -26,11 +26,12 @@ public class SecurityConfig {
         .cors(Customizer.withDefaults())
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/auth/login", "/auth/register").permitAll()
+                .requestMatchers("/user/*/role").hasRole("ADMIN")
                 .anyRequest().authenticated()
             )
               .addFilterBefore(jwtFilter, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter.class)
             .formLogin(form -> form.disable())
-            .httpBasic(Customizer.withDefaults());
+            .httpBasic(basic -> basic.disable());
 
         return http.build();
     }

@@ -36,7 +36,10 @@ export class ProfileComponent {
 
   updateProfile() {
     this.userService.updateProfile(this.user).subscribe({
-      next: () => alert('Perfil actualizado'),
+      next: (updatedUser) => {
+        this.user= updatedUser;
+        alert('Perfil actualizado');
+      },
       error: () => alert('Error al actualizar perfil'),
     });
   }

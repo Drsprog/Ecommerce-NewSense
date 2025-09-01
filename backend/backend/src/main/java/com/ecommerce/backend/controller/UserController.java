@@ -6,9 +6,12 @@ import com.ecommerce.backend.dto.UpdateUserRoleRequest;
 import com.ecommerce.backend.dto.UserResponse;
 import com.ecommerce.backend.service.UserService;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 
 @RestController
@@ -36,16 +39,18 @@ public class UserController {
         return ResponseEntity.ok(updated);
     }
 
+    // Actualizar contraseña
     @PutMapping("/me/password")
     public ResponseEntity<?> updatePassword(
             Authentication authentication,
             @RequestBody UpdatePasswordRequest request) {
         String username = authentication.getName();
         userService.updatePassword(username, request);
-        return ResponseEntity.ok("Contraseña actualizada");
+        return ResponseEntity.ok(Map.of("message", "Contraseña actualizada con éxito"));
     }
 
     // 🔹 Cambiar rol de un usuario (solo admin)
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}/role")
     public ResponseEntity<UserResponse> updateUserRole(
             @PathVariable String id,

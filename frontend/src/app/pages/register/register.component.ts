@@ -2,7 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import {ReactiveFormsModule,FormBuilder,FormGroup,Validators} from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { AuthResponse } from '../../models/auth-response.model';
 
 @Component({
   selector: 'app-register',
@@ -17,7 +18,11 @@ export class RegisterComponent {
   successMessage = '';
   isLoading = false;
 
-  constructor(private fb: FormBuilder, private authService: AuthService) {
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router
+  ) {
     this.registerForm = this.fb.group({
       username: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
@@ -37,10 +42,18 @@ export class RegisterComponent {
     this.isLoading = true;
 
     this.authService.register(this.registerForm.value).subscribe({
-      next: () => {
+      next: (response: AuthResponse) => {
         this.successMessage = 'Usuario registrado exitosamente 🎉';
         this.registerForm.reset(); // Reset form
         this.isLoading = false;
+
+        // Guardar token si viene en la respuesta
+        if (response.token) {
+          this.authService.saveToken(response.token);
+        }
+
+        // Redirigir a home (o donde tengas el navbar)
+        this.router.navigate(['/home']);
       },
       error: (err) => {
         this.errorMessage =

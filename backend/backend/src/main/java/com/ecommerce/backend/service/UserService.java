@@ -1,7 +1,9 @@
 package com.ecommerce.backend.service;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.ecommerce.backend.dto.UpdatePasswordRequest;
 import com.ecommerce.backend.dto.UpdateUserRequest;
@@ -23,7 +25,7 @@ public class UserService {
     // Obtener usuario por username (para /me)
     public UserResponse getByUsername(String username) {
         User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado"));
 
         return UserResponse.builder()
                 .id(user.getId())
@@ -35,8 +37,9 @@ public class UserService {
 
     // Actualizar usuario autenticado (para /me)
     public UserResponse updateByUsername(String username, UpdateUserRequest request) {
+
         User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado"));
 
         if (request.getUsername() != null) {
             user.setUsername(request.getUsername());
@@ -44,8 +47,10 @@ public class UserService {
         if (request.getEmail() != null) {
             user.setEmail(request.getEmail());
         }
-        if (request.getPassword() != null && !request.getPassword().isEmpty()) {
-            user.setPassword(passwordEncoder.encode(request.getPassword()));
+
+        if (request.getEmail() != null && userRepository.existsByEmail(request.getEmail())
+                && !user.getEmail().equals(request.getEmail())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El email ya está en uso");
         }
 
         User updatedUser = userRepository.save(user);
@@ -59,7 +64,8 @@ public class UserService {
     }
 
     public UserResponse updateUser(String id, UpdateUserRequest request) {
-        User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado"));
 
         if (request.getUsername() != null) {
             user.setUsername(request.getUsername());
@@ -67,9 +73,6 @@ public class UserService {
 
         if (request.getEmail() != null) {
             user.setEmail(request.getEmail());
-        }
-        if (request.getPassword() != null && !request.getPassword().isEmpty()) {
-            user.setPassword(passwordEncoder.encode(request.getPassword()));
         }
 
         User updateUser = userRepository.save(user);
@@ -84,7 +87,7 @@ public class UserService {
 
     public void updatePassword(String username, UpdatePasswordRequest request) {
         User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado"));
 
         // Validar contraseña actual
         if (!passwordEncoder.matches(request.getCurrentPassword(), user.getPassword())) {
@@ -99,7 +102,7 @@ public class UserService {
     // actualizar solo el rol (admin)
     public UserResponse updateRole(String id, UpdateUserRoleRequest request) {
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado"));
 
         user.setRole(request.getRole());
         User updatedUser = userRepository.save(user);

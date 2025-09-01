@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { catchError, Observable, throwError, timeout } from 'rxjs';
+import { BehaviorSubject, catchError, Observable, tap, throwError, timeout } from 'rxjs';
 import { RegisterRequest } from '../models/register-request.interface';
+import { AuthResponse } from '../models/auth-response.model';
 
 interface LoginRequest {
   email: string;
@@ -13,20 +14,42 @@ interface LoginRequest {
 })
 export class AuthService {
   private apiUrl = 'http://localhost:8080/auth';
+
+  // 🔹 Estado global de autenticación (true/false)
+  private loggedIn = new BehaviorSubject<boolean>(
+    !!localStorage.getItem('token')
+  );
+  isLoggedIn$ = this.loggedIn.asObservable();
+
   constructor(private http: HttpClient) {}
 
-  login(credentials: LoginRequest): Observable<any> {
-    return this.http.post(`${this.apiUrl}/login`, credentials).pipe(
-      timeout(5000),
-      catchError((err) => {
-        console.error('Error en AuthService:', err);
-        return throwError(() => err);
-      })
-    );
+  login(credentials: LoginRequest): Observable<AuthResponse> {
+    return this.http
+      .post<AuthResponse>(`${this.apiUrl}/login`, credentials)
+      .pipe(
+        timeout(5000),
+        tap((res) => {
+          if (res?.token) {
+            this.saveToken(res.token);
+            this.loggedIn.next(true); // 🔹 notifica al navbar
+          }
+        }),
+        catchError((err) => {
+          console.error('Error en AuthService:', err);
+          return throwError(() => err);
+        })
+      );
   }
 
-  register(data: RegisterRequest): Observable<any> {
-    return this.http.post(`${this.apiUrl}/register`, data);
+  register(data: RegisterRequest): Observable<AuthResponse> {
+    return this.http.post<AuthResponse>(`${this.apiUrl}/register`, data).pipe(
+      tap((res) => {
+        if (res?.token) {
+          this.saveToken(res.token);
+          this.loggedIn.next(true); // 🔹 también notifica al navbar
+        }
+      })
+    );
   }
 
   // guardar token en localStorage

@@ -2,8 +2,10 @@ package com.ecommerce.backend.controller;
 
 import com.ecommerce.backend.dto.UpdatePasswordRequest;
 import com.ecommerce.backend.dto.UpdateUserRequest;
+import com.ecommerce.backend.dto.UpdateUserResponse;
 import com.ecommerce.backend.dto.UpdateUserRoleRequest;
 import com.ecommerce.backend.dto.UserResponse;
+import com.ecommerce.backend.security.JwtUtil;
 import com.ecommerce.backend.service.UserService;
 
 import java.util.Map;
@@ -21,6 +23,9 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+private JwtUtil jwtUtil;
+
     // Obtener perfil del usuario autenticado
     @GetMapping("/me")
     public ResponseEntity<UserResponse> getMyProfile(Authentication authentication) {
@@ -31,12 +36,18 @@ public class UserController {
 
     // Actualizar perfil del usuario autenticado
     @PutMapping("/me")
-    public ResponseEntity<UserResponse> updateMyProfile(
+    public ResponseEntity<UpdateUserResponse> updateMyProfile(
             Authentication authentication,
             @RequestBody UpdateUserRequest request) {
         String username = authentication.getName(); // viene del JWT
-        UserResponse updated = userService.updateByUsername(username, request);
-        return ResponseEntity.ok(updated);
+        UserResponse updatedUser = userService.updateByUsername(username, request);
+        String newToken = jwtUtil.generateToken(updatedUser.getUsername(), updatedUser.getRole());
+        return ResponseEntity.ok(
+            UpdateUserResponse.builder()
+            .user(updatedUser)
+            .token(newToken)
+            .build()
+        );
     }
 
     // Actualizar contraseña

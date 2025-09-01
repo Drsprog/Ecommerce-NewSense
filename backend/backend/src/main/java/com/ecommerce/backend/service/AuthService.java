@@ -36,9 +36,9 @@ public class AuthService {
         }
 
         // Generar JWT
-        String token = jwtUtil.generateToken(user.getUsername());
-        System.out.println("Token generado: " + token);
-        return token;
+       String token = jwtUtil.generateToken(user.getUsername(), user.getRole());
+System.out.println("Token generado: " + token);
+return token;
     }
 
     public String register(RegisterRequest request) {
@@ -55,9 +55,9 @@ public class AuthService {
 
         userRepository.save(user);
          // Generar token al registrarse
-        String token = jwtUtil.generateToken(user.getUsername());
-        System.out.println("Token generado al registrar: " + token);
-        return token;
+       String token = jwtUtil.generateToken(user.getUsername(), user.getRole());
+System.out.println("Token generado al registrar: " + token);
+return token;
     }
 
 }

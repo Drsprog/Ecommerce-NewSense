@@ -1,20 +1,38 @@
-<div class="container">
-  <h1>Bienvenido a la Tienda</h1>
+<div class="container mx-auto p-4">
+  <h1 class="text-3xl font-bold mb-6">Bienvenido a la Tienda</h1>
 
-  <div *ngIf="isLoading">Cargando productos...</div>
-  <div *ngIf="error" class="error">{{ error }}</div>
+  <!-- Loader -->
+  @if (isLoading) {
+    <div class="text-center text-gray-500">Cargando productos...</div>
+  }
 
-  <div class="product-list" *ngIf="!isLoading && products.length > 0">
-    <div class="product-card" *ngFor="let p of products">
-      <h3>{{ p.name }}</h3>
-      <p>{{ p.description }}</p>
-      <p><strong>Precio:</strong> S/ {{ p.price }}</p>
-      <p><small>Stock: {{ p.stock }}</small></p>
-      <button>Añadir al carrito</button>
+  <!-- Error -->
+  @if (error) {
+    <div class="text-center text-red-600">{{ error }}</div>
+  }
+
+  <!-- Lista de productos -->
+  @if (!isLoading && products.length > 0) {
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      @for (p of products; track p.id) {
+        <div class="bg-white p-4 rounded shadow">
+          <h3 class="font-bold">{{ p.name }}</h3>
+          <p>{{ p.description }}</p>
+          <p class="font-semibold">S/ {{ p.price }}</p>
+          <p class="text-sm text-gray-500">Stock: {{ p.stock }}</p>
+          <button
+            (click)="addToCart(p)"
+            class="mt-2 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+          >
+            Añadir al carrito
+          </button>
+        </div>
+      }
     </div>
-  </div>
+  }
 
-  <div *ngIf="!isLoading && products.length === 0">
-    No hay productos disponibles.
+  <!-- Carrito -->
+  <div class="mt-8">
+    <app-cart></app-cart>
   </div>
 </div>

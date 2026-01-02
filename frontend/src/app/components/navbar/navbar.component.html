@@ -4,6 +4,17 @@
     <a routerLink="/" class="hover:text-blue-400 transition">NewSense</a>
   </div>
 
+  <!-- Barra de búsqueda -->
+  <div class="flex-1 mx-6 hidden md:flex justify-center">
+  <input
+    type="text"
+    placeholder="Buscar productos..."
+    [(ngModel)]="searchTerm"
+    (input)="onSearch()"
+    class="w-full max-w-md px-4 py-2 rounded border border-gray-300 text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+  />
+</div>
+
   <!-- Links -->
   <div class="hidden md:flex space-x-6">
     <a routerLink="/" class="hover:text-blue-400 transition">Inicio</a>

@@ -24,23 +24,16 @@ public class ProductController {
         return productService.getProductById(id);
     }
 
-    @GetMapping("/category/{category}/asc")
-    public List<Product> getProductsByCategoryAsc(@PathVariable String category) {
-        return productService.getProductsByCategoryOrderByPriceAsc(category);
+    // Endpoint combinado para búsqueda y filtros
+    @GetMapping("/search")
+    public List<Product> searchProducts(
+            @RequestParam(required = false) String category,
+            @RequestParam(required = false) Double minPrice,
+            @RequestParam(required = false) Double maxPrice,
+            @RequestParam(required = false, defaultValue = "asc") String sort,
+            @RequestParam(required = false, defaultValue = "false") boolean inStock
+    ) {
+        return productService.searchProducts(category, minPrice, maxPrice, sort, inStock);
     }
 
-    @GetMapping("/category/{category}/desc")
-    public List<Product> getProductsByCategoryDesc(@PathVariable String category) {
-        return productService.getProductsByCategoryOrderByPriceDesc(category);
-    }
-
-    @GetMapping("/category/{category}")
-    public List<Product> getByCategory(@PathVariable String category) {
-        return productService.getProductsByCategory(category);
-    }
-
-    @GetMapping("/price/under/{price}")
-    public List<Product> getByPriceLessThan(@PathVariable double price) {
-        return productService.getProductsByPriceLessThan(price);
-    }
 }

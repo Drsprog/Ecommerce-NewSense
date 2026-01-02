@@ -1,1 +1,25 @@
-<p>cart works!</p>
+<div class="p-4 bg-white rounded shadow">
+  <h2 class="text-2xl font-bold mb-4">Carrito de Compras</h2>
+
+  @if (cartService.getCart().length > 0) {
+    <div class="space-y-4">
+      @for (p of cartService.getCart(); track p.id) {
+        <div class="flex justify-between items-center bg-gray-100 p-2 rounded">
+          <div>
+            <p class="font-semibold">{{ p.name }}</p>
+            <p class="text-sm text-gray-600">S/ {{ p.price }}</p>
+          </div>
+          <button (click)="remove(p.id)" class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600">
+            Eliminar
+          </button>
+        </div>
+      }
+    </div>
+    <p class="mt-4 font-bold">Total: S/ {{ getTotal() }}</p>
+    <button (click)="clear()" class="mt-2 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+      Vaciar Carrito
+    </button>
+  } @else {
+    <p class="text-gray-500">No hay productos en el carrito.</p>
+  }
+</div>

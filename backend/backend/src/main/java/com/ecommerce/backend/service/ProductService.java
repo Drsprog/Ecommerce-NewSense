@@ -27,34 +27,9 @@ public class ProductService {
                 .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
     }
 
-    // Buscar productos por categoría
-    public List<Product> getProductsByCategory(String category) {
-        return productRepository.findByCategory(category);
-    }
-
-    // Buscar productos por precio menor a X
-    public List<Product> getProductsByPriceLessThan(double price) {
-        return productRepository.findByPriceLessThan(price);
-    }
-
     // Crear un producto nuevo
     public Product createProduct(Product product) {
         return productRepository.save(product);
-    }
-
-    // Fitro combinado
-    public List<Product> getProductsByCategoryAndPrice(String category, double min, double max) {
-        return productRepository.findByCategoryAndPriceBetween(category, min, max);
-    }
-
-    // Ordenar productos por categoría de forma ascendente
-    public List<Product> getProductsByCategoryOrderByPriceAsc(String category) {
-        return productRepository.findByCategoryOrderByPriceAsc(category);
-    }
-
-    // Ordenar productos por categoría de forma descendente
-    public List<Product> getProductsByCategoryOrderByPriceDesc(String category) {
-        return productRepository.findByCategoryOrderByPriceDesc(category);
     }
 
     // Actualizar un producto existente
@@ -72,4 +47,50 @@ public class ProductService {
         Product product = getProductById(id);
         productRepository.delete(product);
     }
+
+    public List<Product> searchProducts(String category, Double minPrice, Double maxPrice, String sort, boolean inStock) {
+    // Obtener todos los productos
+    List<Product> products = productRepository.findAll();
+
+    // Filtrar por categoría si existe
+    if (category != null && !category.isEmpty()) {
+        products = products.stream()
+                .filter(p -> p.getCategory().equalsIgnoreCase(category))
+                .toList();
+    }
+
+    // Filtrar por precio mínimo
+    if (minPrice != null) {
+        products = products.stream()
+                .filter(p -> p.getPrice() >= minPrice)
+                .toList();
+    }
+
+    // Filtrar por precio máximo
+    if (maxPrice != null) {
+        products = products.stream()
+                .filter(p -> p.getPrice() <= maxPrice)
+                .toList();
+    }
+
+    // Filtrar por stock disponible
+    if (inStock) {
+        products = products.stream()
+                .filter(p -> p.getStock() > 0)
+                .toList();
+    }
+
+    // Ordenar por precio
+    if ("desc".equalsIgnoreCase(sort)) {
+        products = products.stream()
+                .sorted((p1, p2) -> Double.compare(p2.getPrice(), p1.getPrice()))
+                .toList();
+    } else { // asc por defecto
+        products = products.stream()
+                .sorted((p1, p2) -> Double.compare(p1.getPrice(), p2.getPrice()))
+                .toList();
+    }
+
+    return products;
+}
 }

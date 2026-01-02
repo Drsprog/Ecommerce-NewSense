@@ -1,21 +1,74 @@
 import { Injectable } from '@angular/core';
-import { Observable, of} from 'rxjs';
+import { map, Observable, of} from 'rxjs';
 import { Product } from '../models/product.model';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ProductService {
+  private apiUrl = 'http://localhost:8080/products';
+  constructor(private http: HttpClient) {}
 
-  constructor() { }
+  // Obtener todos los productos
+  getProducts(): Observable<Product[]> {
+    return this.http.get<any[]>(this.apiUrl).pipe(
+      map((products) =>
+        products.map((p) => ({
+          id: p.id ?? p._id, // si no tiene id, toma _id
+          name: p.name,
+          description: p.description,
+          price: p.price,
+          stock: p.stock,
+          category: p.category, // MongoDB devuelve _id
+        }))
+      )
+    );
+  }
 
-   getProducts(): Observable<Product[]> {
-    // Datos de prueba
-    const products: Product[] = [
-      { id: 1, name: 'Laptop Gamer', description: 'Laptop potente para juegos.', price: 4500, stock: 5 },
-      { id: 2, name: 'Mouse Inalámbrico', description: 'Ergonómico y preciso.', price: 150, stock: 20 },
-      { id: 3, name: 'Teclado Mecánico', description: 'Switches rojos silenciosos.', price: 300, stock: 10 }
-    ];
-    return of(products);
-}
+  // Obtener producto por ID
+  getProductById(id: string): Observable<Product> {
+    return this.http.get<any>(`${this.apiUrl}/${id}`).pipe(
+      map((p) => ({
+        id: p.id ?? p._id,
+        name: p.name,
+        description: p.description,
+        price: p.price,
+        stock: p.stock,
+        category: p.category,
+      }))
+    );
+  }
+
+  // Filtrar por categoría
+  getProductsByCategory(category: string): Observable<Product[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/category/${category}`).pipe(
+      map((products) =>
+        products.map((p) => ({
+          id: p.id ?? p._id,
+          name: p.name,
+          description: p.description,
+          price: p.price,
+          stock: p.stock,
+          category: p.category,
+        }))
+      )
+    );
+  }
+
+  // Filtrar por precio menor a X
+  getProductsByPriceLessThan(price: number): Observable<Product[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/price/under/${price}`).pipe(
+      map((products) =>
+        products.map((p) => ({
+          id: p.id ?? p._id,
+          name: p.name,
+          description: p.description,
+          price: p.price,
+          stock: p.stock,
+          category: p.category,
+        }))
+      )
+    );
+  }
 }

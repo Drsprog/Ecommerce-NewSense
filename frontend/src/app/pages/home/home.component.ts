@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, OnInit } from '@angular/core';
 import { Product } from '../../models/product.model';
 import { ProductService } from '../../services/product.service';
@@ -7,7 +7,7 @@ import { CartComponent } from '../../components/cart/cart.component';
 
 @Component({
   selector: 'app-home',
-  imports: [CommonModule, CartComponent],
+  imports: [CartComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })

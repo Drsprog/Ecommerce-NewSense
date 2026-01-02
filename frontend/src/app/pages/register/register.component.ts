@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component } from '@angular/core';
 import {ReactiveFormsModule,FormBuilder,FormGroup,Validators} from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
@@ -8,7 +8,7 @@ import { AuthResponse } from '../../models/auth-response.model';
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterModule],
+  imports: [ReactiveFormsModule, RouterModule],
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],
 })

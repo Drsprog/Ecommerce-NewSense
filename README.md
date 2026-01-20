@@ -11,7 +11,7 @@ Permite a los usuarios registrarse, explorar productos, agregarlos al carrito y 
 
 ![Java](https://img.shields.io/badge/Java-21-blue) 
 ![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.2-brightgreen) 
-![Angular](https://img.shields.io/badge/Angular-19-red) 
+![Angular](https://img.shields.io/badge/Angular-20-DD0031?logo=angular&logoColor=white)
 ![Node.js](https://img.shields.io/badge/Node.js-20-green) 
 ![MongoDB](https://img.shields.io/badge/MongoDB-6.0-brightgreen) 
 ![TailwindCSS](https://img.shields.io/badge/TailwindCSS-3.3-blue) 

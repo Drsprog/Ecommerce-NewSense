@@ -2,20 +2,20 @@
 
 ![Ecommerce-NewSense](https://placehold.co/600x400/EEE/31343C?font=open-sans&text=NewSense)
 
-**Ecommerce-NewSense** es una aplicación web de comercio electrónico full-stack desarrollada con **Angular 19**, **Spring Boot (Java 21)** y **MongoDB**, usando **Node.js 20** para el frontend.  
+**Ecommerce-NewSense** es una aplicación web de comercio electrónico full-stack desarrollada con **Angular 19** actualizado con paradigmas de la versión 20, **Spring Boot (Java 21)** y **MongoDB**, usando **Node.js 20** para el frontend.  
 Permite a los usuarios registrarse, explorar productos, agregarlos al carrito y realizar compras, todo con un frontend moderno y un backend seguro y escalable.
 
 ---
 
 ## 🛠 Tecnologías utilizadas
 
-![Java](https://img.shields.io/badge/Java-21-blue) 
-![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.2-brightgreen) 
+![Java](https://img.shields.io/badge/Java-21-007396?logo=java&logoColor=white)
+![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.2-6DB33F?logo=spring&logoColor=white)
 ![Angular](https://img.shields.io/badge/Angular-20-DD0031?logo=angular&logoColor=white)
-![Node.js](https://img.shields.io/badge/Node.js-20-green) 
-![MongoDB](https://img.shields.io/badge/MongoDB-6.0-brightgreen) 
-![TailwindCSS](https://img.shields.io/badge/TailwindCSS-3.3-blue) 
-![JWT](https://img.shields.io/badge/JWT-auth-orange)
+![Node.js](https://img.shields.io/badge/Node.js-20-339933?logo=node.js&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB-6.0-47A248?logo=mongodb&logoColor=white)
+![TailwindCSS](https://img.shields.io/badge/TailwindCSS-4.1-38BDF8?logo=tailwindcss&logoColor=white)
+![JWT](https://img.shields.io/badge/JWT-auth-orange?logo=json-web-tokens&logoColor=white)
 
 ---
 
